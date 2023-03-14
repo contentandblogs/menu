@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="index.css">
-    <title>Document</title>
+    <title>Menu</title>
 </head>
 <body>
     <div class="container-fluid hero">
@@ -19,11 +19,53 @@
             <div class="col-sm-6">
                 <h1>Menu Selector</h1>
                 <p>Don't take stress on what to make today! Let we select menu for you.</p>
-                <h2 id="h2" class="text-capitalize">.........</h2>
-                <button onclick="select()" class="btn btn-light">Get Dish Now </button>
+                <h2  class="text-capitalize">So today's dish is  <span id="dish_name"></span></h2>
+                <button onclick="get()" class="btn btn-light">Get Dish Now </button>
+                <button onclick="select()" id="select" disabled class="btn btn-primary">Select</button>
             </div>
         </div>
     </div>
+    <div class="container text-capitalize  dishes">
+        <h2 class="text-dark text-start">Dishes</h2>
+    <table id="days" class="table table-striped">
+        <thead>
+            <tr>
+                <th>Day</th>
+                <th>Dish Name</th>
+            </tr>
+            <tr>
+                <td>Sunday</td>
+                <td id="Sunday"></td>
+            <tr>   
+                <td>Monday</td>
+                <td id="Monday"></td>
+            </tr>
+            <tr>
+                <td>Tuesday</td>
+                <td id="Tuesday"></td>
+            </tr>
+            <tr>
+                <td>Wednesday</td>
+                <td id="Wednesday"></td>
+            </tr>
+            <tr>
+                <td>Thursday</td>
+                <td id="Thursday"></td>
+            </tr>
+            <tr>
+                <td>Friday</td>
+                <td id="Friday"></td>
+            </tr>
+            <tr>
+                <td>Saturday</td>
+                <td id="Saturday"></td>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+
     <div class="container text-capitalize  dishes">
         <h2 class="text-dark text-start">Dishes</h2>
     <table id="myTable" class="table table-striped">
@@ -38,19 +80,187 @@
       </table>
     </div>
 <script>
-    function select(){
-        var items = ['Chanay ki daal','daal fry','white daal','Kaali daal','spaghetti','kaali daal chawal','peeli daal chawal','aloo ki katliyaan','aloo ka bharta','aloo k parathay','alo ghost','goby ghost','palak ghost','gager ghost','mix sabzi','mater puallao','khicri','basan k parathay','korma','biryani','aloo palak','haleem','keema','mater keema'];
-        console.log(items.length);
+    
+    const Friday = {
+  "Friday": {
+    "Day": "Friday",
+    "Dish_name": ""
+  }
+};
+const Saturday = {
+  "Saturday": {
+    "Day": "Saturday",
+    "Dish_name": ""
+  }
+};
+const Sunday = {
+  "Sunday": {
+    "Day": "Sunday",
+    "Dish_name": ""
+  }
+};
+const Monday = {
+  "Monday": {
+    "Day": "Monday",
+    "Dish_name": ""
+  }
+};
+const Tuesday = {
+  "Tuesday": {
+    "Day": "Tuesday",
+    "Dish_name": ""
+  }
+};
+const Thursday = {
+  "Thursday": {
+    "Day": "Thursday",
+    "Dish_name": ""
+  }
+};
+const Wednesday = {
+  "Wednesday": {
+    "Day": "Wednesday",
+    "Dish_name": ""
+  }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Save the menu object to localStorage
+
+    /*var ob = localStorage.getItem('Wednesday');
+    const myObject = JSON.parse(ob);
+    console.log(myObject.wednesday); // {name: "John",*/
+    
+
+var items = ['Chanay ki daal','daal fry','white daal','Kaali daal','spaghetti','kaali daal chawal','peeli daal chawal','aloo ki katliyaan','aloo ka bharta','aloo k parathay','alo ghost','goby ghost','palak ghost','gager ghost','mix sabzi','mater puallao','khicri','basan k parathay','korma','biryani','aloo palak','haleem','keema','mater keema'];
+    function get(){
         const randomIndex = Math.floor(Math.random() * items.length);
         const randomItem = items[randomIndex];
-        document.getElementById('h2').innerText ='"'+ randomItem+ '"';
-        console.log(randomItem);
+        const randomItems = randomItem.toUpperCase();
+        document.getElementById('dish_name').innerText =randomItems;        
+        
+        console.log(document.getElementById('dish_name').innerText);
+        const myButton = document.querySelector('#select');
+        myButton.disabled = false;
     };
-    var items = ['Chanay ki daal','daal fry','white daal','Kaali daal','spaghetti','kaali daal chawal','peeli daal chawal','aloo ki katliyaan','aloo ka bharta','aloo k parathay','alo ghost','goby ghost','palak ghost','gager ghost','mix sabzi','mater puallao','khicri','basan k parathay','korma','biryani','aloo palak','haleem','keema','mater keema'];
+    
+    function select(){
+        const today = new Date();
+        const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        const dayOfWeekName = daysOfWeek[today.getDay()];
+        //console.log(dayOfWeekName);
+        var dish = document.getElementById('dish_name').innerText;    
+
+        const myObject = {};
+        if(dayOfWeekName == "Wednesday"){
+            myObject.Wednesday = { Day: dayOfWeekName, Dish_name: dish};
+            localStorage.setItem(dayOfWeekName, JSON.stringify(myObject));
+            const storedObject = JSON.parse(localStorage.getItem(dayOfWeekName));
+        }else if (dayOfWeekName == "Thursday") {
+            myObject.Thursday = { Day: dayOfWeekName, Dish_name: dish};
+            localStorage.setItem(dayOfWeekName, JSON.stringify(myObject));
+            const storedObject = JSON.parse(localStorage.getItem(dayOfWeekName));
+        }else if (dayOfWeekName == "Friday") {
+            myObject.Friday = { Day: dayOfWeekName, Dish_name: dish};
+            localStorage.setItem(dayOfWeekName, JSON.stringify(myObject));
+            const storedObject = JSON.parse(localStorage.getItem(dayOfWeekName));
+        }else if (dayOfWeekName == "Saturday") {
+            myObject.Saturday = { Day: dayOfWeekName, Dish_name: dish};
+            localStorage.setItem(dayOfWeekName, JSON.stringify(myObject));
+            const storedObject = JSON.parse(localStorage.getItem(dayOfWeekName));
+        }else if (dayOfWeekName == "Sunday") {
+            myObject.Sunday = { Day: dayOfWeekName, Dish_name: dish};
+            localStorage.setItem(dayOfWeekName, JSON.stringify(myObject));
+            const storedObject = JSON.parse(localStorage.getItem(dayOfWeekName));
+        }
+        else if (dayOfWeekName == "Monday") {
+            myObject.Monday = { Day: dayOfWeekName, Dish_name: dish};
+            localStorage.setItem(dayOfWeekName, JSON.stringify(myObject));
+            const storedObject = JSON.parse(localStorage.getItem(dayOfWeekName));
+        }
+        else if (dayOfWeekName == "Tuesday") {
+            myObject.Tuesday = { Day: dayOfWeekName, Dish_name: dish};
+            localStorage.setItem(dayOfWeekName, JSON.stringify(myObject));
+            const storedObject = JSON.parse(localStorage.getItem(dayOfWeekName));
+        }
+
+
+        
+        
+
+
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    var w = localStorage.getItem('Wednesday');
+    const wed = JSON.parse(w);
+    
+
+    var th = localStorage.getItem('Thursday');
+    const thr = JSON.parse(th);
+    
+
+    var fr = localStorage.getItem('Friday');
+    const fri = JSON.parse(fr);
+    var sa = localStorage.getItem('Saturday');
+    const sat = JSON.parse(sa);
+    var su = localStorage.getItem('Sunday');
+    const sun = JSON.parse(su);
+
+    var mo = localStorage.getItem('Monday');
+    const mon = JSON.parse(mo);
+    var tu = localStorage.getItem('Tuesday');
+    const tue = JSON.parse(tu);
+
+
+    if(fri.Friday.Dish_name == ''){localStorage.setItem("Friday", JSON.stringify(Friday));}else{document.getElementById('Sunday').innerText = fri.Friday.Dish_name;}
+    if(sat.Saturday.Dish_name == ''){localStorage.setItem("Saturday", JSON.stringify(Saturday));}else{document.getElementById('Monday').innerText = sat.Saturday.Dish_name;}
+    if(sun.Sunday.Dish_name == ''){localStorage.setItem("Sunday", JSON.stringify(Sunday));}else{document.getElementById('Tuesday').innerText = sun.Sunday.Dish_name;}
+    if(mon.Monday.Dish_name == ''){localStorage.setItem("Monday", JSON.stringify(Monday));}else{document.getElementById('Wednesday').innerText = mon.Monday.Dish_name;}
+    if(tue.Tuesday.Dish_name == ''){localStorage.setItem("Tuesday", JSON.stringify(Tuesday));}else{document.getElementById('Thursday').innerText = tue.Tuesday.Dish_name;}
+    if(wed.Wednesday.Dish_name == ''){localStorage.setItem("Wednesday", JSON.stringify(Wednesday));}else{document.getElementById('Friday').innerText = wed.Wednesday.Dish_name;}
+    if(thr.Thursday.Dish_name == ''){localStorage.setItem("Thursday", JSON.stringify(Thursday));}else{document.getElementById('Saturday').innerText = thr.Thursday.Dish_name;}
+        
+    
+    
+    
+    
+    
+
+    
+
+    console.log(wed.Wednesday.Dish_name);    
+    
+    
+    
+    
+    
     const tableBody = document.querySelector('#myTable tbody');
     let ii = 1;
     for (let i = 0; i < items.length; i++) {
-        
         const row = document.createElement('tr');
         const indexCell = document.createElement('td');
         const valueCell = document.createElement('td');
